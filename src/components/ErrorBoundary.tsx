@@ -28,6 +28,9 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 
   private handleReset = () => {
     this.setState({ hasError: false, error: null });
+  };
+
+  private handleReload = () => {
     window.location.reload();
   };
 
@@ -51,14 +54,21 @@ export default class ErrorBoundary extends React.Component<Props, State> {
                   </code>
                 )}
               </p>
-              <Button 
-                variant="outline" 
-                className="w-full"
-                onClick={this.handleReset}
-              >
-                <RefreshCcw className="h-4 w-4 mr-2" />
-                Reload Application
-              </Button>
+              <div className="grid grid-cols-2 gap-4">
+                <Button 
+                  variant="outline" 
+                  onClick={this.handleReset}
+                >
+                  <RefreshCcw className="h-4 w-4 mr-2" />
+                  Try Again
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  onClick={this.handleReload}
+                >
+                  Reload Page
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

@@ -37,24 +37,16 @@ export default function App() {
         return <BayesRule />;
       case 'overfitting':
         return <Overfitting />;
-      case 'game-theory':
-        return <GameTheory />;
       case 'relaxation':
         return <Relaxation />;
-      case 'networking':
-        return <Networking />;
       case 'randomness':
         return <Randomness />;
+      case 'networking':
+        return <Networking />;
+      case 'game-theory':
+        return <GameTheory />;
       default:
-        return (
-          <Card className="book-shadow border-none bg-card/50 py-12">
-            <CardContent className="flex flex-col items-center justify-center space-y-4">
-              <Construction className="h-12 w-12 text-muted-foreground" />
-              <CardTitle>Chapter Under Construction</CardTitle>
-              <p className="text-muted-foreground">This visual module is coming soon!</p>
-            </CardContent>
-          </Card>
-        );
+        return <Home onStart={() => setCurrentChapter('optimal-stopping')} onChapterSelect={setCurrentChapter} />;
     }
   };
 
