@@ -7,10 +7,12 @@ import { Info, Database, HardDrive, Cpu, Search, Trash2 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
+import { CACHE_SIZE } from '@/lib/constants';
+
+const mainMemory = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+
 export default function Caching() {
   const [cache, setCache] = React.useState<string[]>([]);
-  const [mainMemory, setMainMemory] = React.useState<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']);
-  const [cacheSize] = React.useState(4);
   const [hits, setHits] = React.useState(0);
   const [misses, setMisses] = React.useState(0);
   const [lastAction, setLastAction] = React.useState<{ type: 'hit' | 'miss', item: string } | null>(null);
@@ -26,7 +28,7 @@ export default function Caching() {
       setLastAction({ type: 'hit', item });
     } else {
       // MISS: Add to front, evict last if full
-      const newCache = [item, ...cache.slice(0, cacheSize - 1)];
+      const newCache = [item, ...cache.slice(0, CACHE_SIZE - 1)];
       setCache(newCache);
       setMisses(misses + 1);
       setLastAction({ type: 'miss', item });
@@ -73,7 +75,7 @@ export default function Caching() {
               <div className="space-y-4">
                 <h4 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
                   <Cpu className="h-4 w-4" />
-                  L1 Cache (Size: {cacheSize})
+                  L1 Cache (Size: {CACHE_SIZE})
                 </h4>
                 <div className="flex gap-2 h-20">
                   <AnimatePresence mode="popLayout">
@@ -92,7 +94,7 @@ export default function Caching() {
                         {item}
                       </motion.div>
                     ))}
-                    {Array.from({ length: cacheSize - cache.length }).map((_, i) => (
+                    {Array.from({ length: CACHE_SIZE - cache.length }).map((_, i) => (
                       <div key={`empty-${i}`} className="w-16 h-16 border-2 border-dashed border-muted rounded-xl flex items-center justify-center text-muted-foreground italic text-xs">
                         Empty
                       </div>

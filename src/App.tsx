@@ -12,6 +12,7 @@ import GameTheory from './components/chapters/GameTheory';
 import Relaxation from './components/chapters/Relaxation';
 import Networking from './components/chapters/Networking';
 import Randomness from './components/chapters/Randomness';
+import ErrorBoundary from './components/ErrorBoundary';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Construction } from 'lucide-react';
 
@@ -59,7 +60,9 @@ export default function App() {
 
   return (
     <Layout currentChapter={currentChapter} onChapterChange={setCurrentChapter}>
-      {renderContent()}
+      <ErrorBoundary>
+        {renderContent()}
+      </ErrorBoundary>
     </Layout>
   );
 }

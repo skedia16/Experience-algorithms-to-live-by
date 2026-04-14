@@ -7,6 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Info, Home, User, CheckCircle2, XCircle } from 'lucide-react';
 
+import { OPTIMAL_STOPPING_THRESHOLD } from '@/lib/constants';
+
+interface DotRenderProps {
+  cx?: number;
+  cy?: number;
+  payload?: {
+    name: number;
+    score: number;
+    status: 'unseen' | 'looking' | 'leaping' | 'hired' | 'passed';
+  };
+}
+
 export default function OptimalStopping() {
   const [poolSize, setPoolSize] = React.useState(100);
   const [currentStep, setCurrentStep] = React.useState(0);
@@ -14,7 +26,7 @@ export default function OptimalStopping() {
   const [bestInLooking, setBestInLooking] = React.useState(0);
   const [hiredApplicant, setHiredApplicant] = React.useState<number | null>(null);
 
-  const optimalThreshold = Math.round(poolSize * 0.37);
+  const optimalThreshold = Math.round(poolSize * OPTIMAL_STOPPING_THRESHOLD);
 
   const generateApplicants = React.useCallback(() => {
     const newApplicants = Array.from({ length: poolSize }, (_, i) => ({
@@ -158,8 +170,9 @@ export default function OptimalStopping() {
                     type="monotone" 
                     dataKey="score" 
                     stroke="rgba(0,0,0,0.2)" 
-                    dot={(props: any) => {
+                    dot={(props: DotRenderProps) => {
                       const { cx, cy, payload } = props;
+                      if (!payload) return null;
                       let fill = "#d1d1d1";
                       if (payload.status === 'looking') fill = "#fbbf24";
                       if (payload.status === 'leaping') fill = "#94a3b8";

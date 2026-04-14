@@ -70,11 +70,11 @@ export default function Overfitting() {
                             <p className="font-bold text-primary">Predictions:</p>
                             <div className="flex justify-between gap-4">
                               <span className="text-muted-foreground">Complex Model:</span>
-                              <span className="font-mono font-bold">{payload[0].value?.toFixed(1)}</span>
+                              <span className="font-mono font-bold">{Number(payload[0].value).toFixed(1)}</span>
                             </div>
                             <div className="flex justify-between gap-4">
                               <span className="text-muted-foreground">True Model:</span>
-                              <span className="font-mono font-bold text-green-600">{payload[1]?.value?.toFixed(1)}</span>
+                              <span className="font-mono font-bold text-green-600">{Number(payload[1]?.value).toFixed(1)}</span>
                             </div>
                           </div>
                         );

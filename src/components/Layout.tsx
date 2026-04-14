@@ -40,13 +40,13 @@ export default function Layout({ children, currentChapter, onChapterChange }: La
           </div>
           
           <nav className="hidden md:flex items-center gap-6">
-            <Button variant="ghost" onClick={() => setIsSidebarOpen(true)}>
+            <Button variant="ghost" onClick={() => setIsSidebarOpen(true)} aria-label="Open chapters menu">
               <Menu className="h-5 w-5 mr-2" />
               Chapters
             </Button>
           </nav>
 
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(!isSidebarOpen)} aria-label="Toggle mobile menu">
             {isSidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>

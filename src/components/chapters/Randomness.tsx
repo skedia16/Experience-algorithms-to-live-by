@@ -9,10 +9,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Refe
 import { Info, Dice5, Zap, RefreshCcw, TrendingUp, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { LANDSCAPE_MAX_X, DEFAULT_TEMPERATURE, COOLING_RATE, PATH_HISTORY_LENGTH } from '@/lib/constants';
+
 // Generate a landscape with multiple peaks
 const generateLandscape = () => {
   const points = [];
-  for (let x = 0; x <= 100; x++) {
+  for (let x = 0; x <= LANDSCAPE_MAX_X; x++) {
     // A function with one global maximum and several local ones
     const y = 20 * Math.sin(x / 5) + 
               15 * Math.cos(x / 10) + 
@@ -29,22 +31,11 @@ const GLOBAL_MAX_X = LANDSCAPE.find(p => p.y === GLOBAL_MAX)?.x || 0;
 
 export default function Randomness() {
   const [currentX, setCurrentX] = React.useState(10);
-  const [temperature, setTemperature] = React.useState(50);
+  const [temperature, setTemperature] = React.useState(DEFAULT_TEMPERATURE);
   const [isRunning, setIsRunning] = React.useState(false);
   const [bestY, setBestY] = React.useState(0);
   const [isAutoCooling, setIsAutoCooling] = React.useState(false);
   const [path, setPath] = React.useState<{ x: number; y: number }[]>([]);
-
-  const tempRef = React.useRef(temperature);
-  const autoCoolRef = React.useRef(isAutoCooling);
-  
-  React.useEffect(() => {
-    tempRef.current = temperature;
-  }, [temperature]);
-
-  React.useEffect(() => {
-    autoCoolRef.current = isAutoCooling;
-  }, [isAutoCooling]);
 
   const step = React.useCallback(() => {
     setCurrentX(prevX => {
@@ -52,7 +43,7 @@ export default function Randomness() {
       
       // Pick a neighbor
       const direction = Math.random() > 0.5 ? 1 : -1;
-      const nextX = Math.max(0, Math.min(100, prevX + direction));
+      const nextX = Math.max(0, Math.min(LANDSCAPE_MAX_X, prevX + direction));
       const nextY = LANDSCAPE[nextX].y;
       
       const delta = nextY - currentY;
@@ -62,7 +53,7 @@ export default function Randomness() {
       if (delta > 0) {
         accept = true;
       } else {
-        const probability = Math.exp(delta / (tempRef.current + 1));
+        const probability = Math.exp(delta / (temperature + 1));
         if (Math.random() < probability) {
           accept = true;
         }
@@ -70,18 +61,18 @@ export default function Randomness() {
       
       if (accept) {
         setBestY(prevBest => Math.max(prevBest, nextY));
-        setPath(prev => [...prev.slice(-20), { x: nextX, y: nextY }]);
+        setPath(prev => [...prev.slice(-PATH_HISTORY_LENGTH), { x: nextX, y: nextY }]);
         
         // Auto-cooling logic
-        if (autoCoolRef.current && tempRef.current > 0.5) {
-          setTemperature(prev => Math.max(0, prev * 0.99));
+        if (isAutoCooling && temperature > 0.5) {
+          setTemperature(prev => Math.max(0, prev * COOLING_RATE));
         }
         
         return nextX;
       }
       return prevX;
     });
-  }, []);
+  }, [temperature, isAutoCooling]);
 
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -92,11 +83,11 @@ export default function Randomness() {
   }, [isRunning, step]);
 
   const reset = () => {
-    setCurrentX(Math.floor(Math.random() * 100));
+    setCurrentX(Math.floor(Math.random() * LANDSCAPE_MAX_X));
     setBestY(0);
     setIsRunning(false);
     setPath([]);
-    setTemperature(50);
+    setTemperature(DEFAULT_TEMPERATURE);
   };
 
   const currentY = LANDSCAPE[currentX].y;
@@ -146,7 +137,7 @@ export default function Randomness() {
                       y={p.y} 
                       r={2} 
                       fill="hsl(var(--primary))" 
-                      fillOpacity={i / path.length}
+                      fillOpacity={path.length > 0 ? i / path.length : 0}
                       stroke="none"
                     />
                   ))}
