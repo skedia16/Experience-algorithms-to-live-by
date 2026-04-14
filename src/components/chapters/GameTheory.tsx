@@ -44,9 +44,12 @@ export default function GameTheory() {
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Game Theory</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "Why is it so hard for people to cooperate, even when it's in everyone's best interest?"
+        </p>
         <p className="text-lg leading-relaxed">
           Understanding the <strong>Minds of Others</strong>. 
-          In many situations, the best choice for you depends on what others choose.
+          In many situations, the best choice for you depends entirely on what you think others will choose.
         </p>
       </div>
 

@@ -15,7 +15,7 @@ export default function Sorting() {
   const [sortedIndices, setSortedIndices] = React.useState<number[]>([]);
   const [comparisons, setComparisons] = React.useState(0);
 
-  const resetArray = () => {
+  const resetArray = React.useCallback(() => {
     const newArray = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100) + 10);
     setArray(newArray);
     setSorting(false);
@@ -23,11 +23,11 @@ export default function Sorting() {
     setSwapping(null);
     setSortedIndices([]);
     setComparisons(0);
-  };
+  }, []);
 
   React.useEffect(() => {
     resetArray();
-  }, []);
+  }, [resetArray]);
 
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -62,17 +62,21 @@ export default function Sorting() {
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Sorting</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "Should you spend hours alphabetizing your bookshelf, or just pile the books as they come?"
+        </p>
         <p className="text-lg leading-relaxed">
-          Sorting is the act of making order. But order has a cost. 
+          Sorting is the act of making order, but order has a cost. 
           The <strong>search-sort tradeoff</strong> tells us that sorting is only worth it 
-          if you plan to search many times.
+          if you plan to search for things many times. If you're only looking for a book once, 
+          alphabetizing the whole shelf is a waste of time.
         </p>
         <div className="flex items-center gap-2 p-4 bg-accent/10 rounded-xl border border-accent/20">
           <Info className="h-5 w-5 text-primary shrink-0" />
           <p className="text-sm italic">
-            <strong>Big-O Notation</strong>: A yardstick for the worst case. 
-            Bubble Sort is O(n²), while Mergesort is O(n log n). 
-            Scale hurts!
+            <strong>Big-O Notation</strong>: This is just a way to measure how much harder a task gets as it grows. 
+            For example, sorting 100 books isn't twice as hard as sorting 50—it's actually <strong>four times</strong> as hard! 
+            As your collection grows, the "agony" of sorting grows even faster.
           </p>
         </div>
       </div>

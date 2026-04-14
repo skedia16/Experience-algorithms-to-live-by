@@ -2,13 +2,83 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { BookOpen, ArrowRight, Brain, Zap, Clock, Users } from 'lucide-react';
+import { BookOpen, ArrowRight, Brain, Zap, Clock, Users, ListOrdered, Calendar, Calculator, AlertTriangle, Coffee, Share2, Dice5 } from 'lucide-react';
 
 interface HomeProps {
   onStart: () => void;
+  onChapterSelect: (id: string) => void;
 }
 
-export default function Home({ onStart }: HomeProps) {
+export default function Home({ onStart, onChapterSelect }: HomeProps) {
+  const features = [
+    {
+      id: "optimal-stopping",
+      icon: Clock,
+      title: "Optimal Stopping",
+      description: "When should you stop looking for an apartment or a partner? The 37% rule has the answer."
+    },
+    {
+      id: "explore-exploit",
+      icon: Zap,
+      title: "Explore vs Exploit",
+      description: "Should you go to your favorite restaurant or try the new one? Balance novelty and tradition."
+    },
+    {
+      id: "sorting",
+      icon: ListOrdered,
+      title: "Sorting",
+      description: "Making order has a cost. Learn the search-sort tradeoff and the agony of O(n²)."
+    },
+    {
+      id: "caching",
+      icon: Brain,
+      title: "Memory & Caching",
+      description: "How to organize your closet and your mind using the principles of computer memory."
+    },
+    {
+      id: "scheduling",
+      icon: Calendar,
+      title: "Scheduling",
+      description: "How to decide what to do first. Minimize wait time or maximize your reputation."
+    },
+    {
+      id: "bayes-rule",
+      icon: Calculator,
+      title: "Bayes's Rule",
+      description: "Predicting the future from small data. How to be a good Bayesian in a noisy world."
+    },
+    {
+      id: "overfitting",
+      icon: AlertTriangle,
+      title: "Overfitting",
+      description: "When to think less. Why simple models often outperform complex ones in the real world."
+    },
+    {
+      id: "relaxation",
+      icon: Coffee,
+      title: "Relaxation",
+      description: "Let it slide. When the perfect solution is impossible, look for a 'good enough' one."
+    },
+    {
+      id: "randomness",
+      icon: Dice5,
+      title: "Randomness",
+      description: "When to leave it to chance. Using the power of the dice to solve impossible problems."
+    },
+    {
+      id: "networking",
+      icon: Share2,
+      title: "Networking",
+      description: "How we connect. The protocols that keep the internet—and our conversations—running."
+    },
+    {
+      id: "game-theory",
+      icon: Users,
+      title: "Game Theory",
+      description: "Understanding the minds of others and the complex dynamics of social cooperation."
+    }
+  ];
+
   return (
     <div className="space-y-16">
       {/* Hero Section */}
@@ -49,36 +119,18 @@ export default function Home({ onStart }: HomeProps) {
       </section>
 
       {/* Features Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {[
-          {
-            icon: Clock,
-            title: "Optimal Stopping",
-            description: "When should you stop looking for an apartment or a partner? The 37% rule has the answer."
-          },
-          {
-            icon: Zap,
-            title: "Explore vs Exploit",
-            description: "Should you go to your favorite restaurant or try the new one? Balance novelty and tradition."
-          },
-          {
-            icon: Brain,
-            title: "Memory & Caching",
-            description: "How to organize your closet and your mind using the principles of computer memory."
-          },
-          {
-            icon: Users,
-            title: "Game Theory",
-            description: "Understanding the minds of others and the complex dynamics of social cooperation."
-          }
-        ].map((feature, i) => (
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {features.map((feature, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + i * 0.1 }}
+            transition={{ delay: 0.1 + i * 0.05 }}
           >
-            <Card className="h-full border-none bg-card/50 backdrop-blur-sm book-shadow hover:translate-y-[-4px] transition-transform">
+            <Card 
+              className="h-full border-none bg-card/50 backdrop-blur-sm book-shadow hover:translate-y-[-4px] transition-transform cursor-pointer hover:bg-card/80"
+              onClick={() => onChapterSelect(feature.id)}
+            >
               <CardContent className="p-6 space-y-4">
                 <div className="p-3 rounded-xl bg-primary/10 w-fit">
                   <feature.icon className="h-6 w-6 text-primary" />

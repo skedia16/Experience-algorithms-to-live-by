@@ -44,16 +44,20 @@ export default function Caching() {
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Caching</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "Where did I put my keys? Why is my favorite sweater always at the top of the pile?"
+        </p>
         <p className="text-lg leading-relaxed">
           Caching is the art of keeping what you need close at hand. 
-          The <strong>Memory Hierarchy</strong> balances speed and size: small and fast (L1 Cache) 
-          vs. large and slow (Hard Drive).
+          The <strong>Memory Hierarchy</strong> balances speed and size: small and fast (like your desk) 
+          vs. large and slow (like the library stacks).
         </p>
         <div className="flex items-center gap-2 p-4 bg-accent/10 rounded-xl border border-accent/20">
           <Info className="h-5 w-5 text-primary shrink-0" />
           <p className="text-sm italic">
-            <strong>LRU (Least Recently Used)</strong>: The most effective strategy for eviction. 
-            Keep the items you used recently; discard the ones you haven't touched in a while.
+            <strong>LRU (Least Recently Used)</strong>: This is the most effective strategy for deciding what to keep. 
+            Keep the items you used recently; discard the ones you haven't touched in a while. 
+            It's why a "pile" of papers on a desk is actually a very efficient filing system!
           </p>
         </div>
       </div>

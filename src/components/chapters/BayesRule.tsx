@@ -18,9 +18,12 @@ export default function BayesRule() {
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Bayes's Rule</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "If you win a raffle on your first try, are you just lucky, or is the game rigged?"
+        </p>
         <p className="text-lg leading-relaxed">
           How do we predict the future from a single data point? 
-          <strong> Bayes's Rule</strong> allows us to combine our prior beliefs with new evidence.
+          <strong> Bayes's Rule</strong> allows us to combine our prior beliefs with new evidence to make better guesses.
         </p>
       </div>
 

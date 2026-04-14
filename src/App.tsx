@@ -9,6 +9,9 @@ import Scheduling from './components/chapters/Scheduling';
 import BayesRule from './components/chapters/BayesRule';
 import Overfitting from './components/chapters/Overfitting';
 import GameTheory from './components/chapters/GameTheory';
+import Relaxation from './components/chapters/Relaxation';
+import Networking from './components/chapters/Networking';
+import Randomness from './components/chapters/Randomness';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Construction } from 'lucide-react';
 
@@ -18,7 +21,7 @@ export default function App() {
   const renderContent = () => {
     switch (currentChapter) {
       case 'home':
-        return <Home onStart={() => setCurrentChapter('optimal-stopping')} />;
+        return <Home onStart={() => setCurrentChapter('optimal-stopping')} onChapterSelect={setCurrentChapter} />;
       case 'optimal-stopping':
         return <OptimalStopping />;
       case 'explore-exploit':
@@ -35,6 +38,12 @@ export default function App() {
         return <Overfitting />;
       case 'game-theory':
         return <GameTheory />;
+      case 'relaxation':
+        return <Relaxation />;
+      case 'networking':
+        return <Networking />;
+      case 'randomness':
+        return <Randomness />;
       default:
         return (
           <Card className="book-shadow border-none bg-card/50 py-12">

@@ -51,9 +51,11 @@ export default function Scheduling() {
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Scheduling</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "How do you decide what to do first when your to-do list is a mile long?"
+        </p>
         <p className="text-lg leading-relaxed">
-          How do you decide what to do first? 
-          The best strategy depends on your goal.
+          The best strategy depends entirely on your goal. Are you trying to clear your desk, or keep your promises?
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border border-blue-100">

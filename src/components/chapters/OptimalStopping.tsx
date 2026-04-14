@@ -16,7 +16,7 @@ export default function OptimalStopping() {
 
   const optimalThreshold = Math.round(poolSize * 0.37);
 
-  const generateApplicants = () => {
+  const generateApplicants = React.useCallback(() => {
     const newApplicants = Array.from({ length: poolSize }, (_, i) => ({
       id: i + 1,
       score: Math.floor(Math.random() * 100),
@@ -26,11 +26,11 @@ export default function OptimalStopping() {
     setCurrentStep(0);
     setBestInLooking(0);
     setHiredApplicant(null);
-  };
+  }, [poolSize]);
 
   React.useEffect(() => {
     generateApplicants();
-  }, [poolSize]);
+  }, [generateApplicants]);
 
   const nextStep = () => {
     if (currentStep >= poolSize || hiredApplicant !== null) return;
@@ -92,14 +92,23 @@ export default function OptimalStopping() {
     status: a.status
   }));
 
-  const actualBest = Math.max(...applicants.map(a => a.score));
-  const hiredScore = hiredApplicant ? applicants.find(a => a.id === hiredApplicant)?.score : null;
+  const actualBest = React.useMemo(() => 
+    applicants.length > 0 ? Math.max(...applicants.map(a => a.score)) : 0
+  , [applicants]);
+
+  const hiredScore = React.useMemo(() => 
+    hiredApplicant ? applicants.find(a => a.id === hiredApplicant)?.score : null
+  , [hiredApplicant, applicants]);
+
   const isSuccess = hiredScore === actualBest;
 
   return (
     <div className="space-y-8">
       <div className="space-y-4">
         <h2 className="text-3xl font-heading font-bold text-primary">Optimal Stopping</h2>
+        <p className="text-lg leading-relaxed italic text-muted-foreground">
+          "When should you stop looking for an apartment, a parking spot, or even a life partner?"
+        </p>
         <p className="text-lg leading-relaxed">
           Imagine you're searching for an apartment in a competitive market. 
           You can't go back to an apartment once you've passed it. 
