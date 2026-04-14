@@ -1,0 +1,6 @@
+{
+  "name": "AlgoLife",
+  "description": "An interactive visual guide to the computer science of human decisions, based on 'Algorithms to Live By'.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
